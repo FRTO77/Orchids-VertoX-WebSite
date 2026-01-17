@@ -2,65 +2,77 @@
 
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
 import { motion } from "framer-motion"
 
+const editorialEase = [0.22, 1, 0.36, 1]
+
 export default function PrivacyPage() {
+  const sections = [
+    {
+      title: "1. Information We Collect",
+      content: "We collect information you provide directly to us, including account information, audio data for translation, and usage data. We may also collect information about your device and how you interact with our services."
+    },
+    {
+      title: "2. How We Use Information",
+      content: "We use the information we collect to provide, maintain, and improve our services, process translations, communicate with you, and ensure security and prevent fraud."
+    },
+    {
+      title: "3. Audio Data Processing",
+      content: "Audio data is processed in real-time for translation purposes. By default, audio is transient and not stored permanently. Enterprise customers may opt into encrypted retention with role-based access controls."
+    },
+    {
+      title: "4. Voice Cloning Consent",
+      content: "Voice cloning features require explicit consent from the voice owner. We maintain consent records and provide mechanisms for consent withdrawal at any time."
+    },
+    {
+      title: "5. Data Security",
+      content: "We implement industry-standard security measures including end-to-end encryption for audio transmission, secure data storage, and regular security audits."
+    },
+    {
+      title: "6. Your Rights",
+      content: "You have the right to access, correct, or delete your personal data. You may also request data portability or object to certain processing activities. Contact us at privacy@vertox.ai for any requests."
+    }
+  ]
+
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+      <div className="grain" />
       <Navbar />
       
-      <main className="flex-grow pt-32 pb-24 px-4">
-        <div className="container mx-auto max-w-4xl">
+      <main className="flex-grow pt-32 pb-24 px-6 md:px-12">
+        <div className="container mx-auto max-w-3xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass p-8 md:p-12 rounded-[40px] border-border/50"
+            transition={{ duration: 1, ease: editorialEase }}
+            className="mb-16"
           >
-            <h1 className="text-4xl md:text-6xl font-heading font-black mb-8">Privacy <span className="text-primary">Policy.</span></h1>
-            
-            <div className="prose prose-invert prose-blue max-w-none space-y-8 text-muted-foreground">
-              <section>
-                <h2 className="text-2xl font-bold text-foreground">1. Data We Collect</h2>
-                <p>
-                  We collect audio data for real-time translation and voice cloning. This data is encrypted and processed in secure environments. We also collect basic account information like your name and email.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground">2. How We Use Data</h2>
-                <p>
-                  Your data is used exclusively to provide and improve the translation and voice cloning services you request. We have a strict "No-Training" policy for enterprise customers.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground">3. Biometric Information</h2>
-                <p>
-                  Voice prints are considered biometric data. These are stored using advanced encryption and are never shared with third parties. You can delete your voice profile at any time.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground">4. Data Security</h2>
-                <p>
-                  We implement industry-standard security measures, including end-to-end encryption and regular security audits, to protect your personal and communication data.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground">5. Your Rights</h2>
-                <p>
-                  You have the right to access, correct, or delete your personal data. You can exercise these rights through your account settings or by contacting our support team.
-                </p>
-              </section>
-            </div>
-            
-            <div className="mt-12 pt-8 border-t border-border/50 text-sm text-muted-foreground">
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-6">Legal</p>
+            <h1 className="text-5xl md:text-7xl font-serif font-light leading-[0.85] mb-8">
+              Privacy <em className="italic">Policy</em>
+            </h1>
+            <p className="text-sm text-black/40 dark:text-white/40">
               Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-            </div>
+            </p>
           </motion.div>
+
+          <div className="space-y-12">
+            {sections.map((section, i) => (
+              <motion.div
+                key={section.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: editorialEase, delay: i * 0.05 }}
+                className="border-b border-black/10 dark:border-white/10 pb-12"
+              >
+                <h2 className="text-2xl font-serif font-light mb-4">{section.title}</h2>
+                <p className="text-black/60 dark:text-white/60 font-light leading-relaxed">
+                  {section.content}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </main>
 

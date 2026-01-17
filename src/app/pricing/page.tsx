@@ -3,13 +3,14 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Check, HelpCircle, Zap, Shield, Globe, Users } from "lucide-react"
+import { Check, Shield, Globe, Users, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
+
+const editorialEase = [0.22, 1, 0.36, 1]
 
 const tiers = [
   {
@@ -65,660 +66,169 @@ export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(false)
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+      <div className="grain" />
       <Navbar />
       
       <main className="flex-grow pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-6xl font-heading font-black mb-6">Simple, Transparent <br /><span className="text-primary">Pricing.</span></h1>
-            <p className="text-xl text-muted-foreground mb-10">Choose the plan that's right for your global communication needs. No hidden fees.</p>
-            
-            <div className="flex items-center justify-center gap-4">
-              <span className={cn("text-sm font-medium", !isYearly ? "text-foreground" : "text-muted-foreground")}>Monthly</span>
+        <div className="container mx-auto px-6 md:px-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-6">Pricing</p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-[0.85] mb-8">
+              Simple, <em className="italic">transparent</em> pricing
+            </h1>
+            <p className="text-lg text-black/60 dark:text-white/60 font-light mb-12">
+              Choose the plan that's right for your global communication needs. No hidden fees.
+            </p>
+          
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: editorialEase, delay: 0.2 }}
+              className="flex items-center justify-center gap-6"
+            >
+              <span className={cn("text-sm font-light tracking-wide", !isYearly ? "text-black dark:text-white" : "text-black/40 dark:text-white/40")}>Monthly</span>
               <Switch 
                 checked={isYearly}
                 onCheckedChange={setIsYearly}
               />
-              <span className={cn("text-sm font-medium", isYearly ? "text-foreground" : "text-muted-foreground")}>Yearly</span>
-                <Badge className="bg-green-500/10 text-green-500 hover:bg-green-500/10 border-green-500/20">
-                  Save 20% on Annual
-                </Badge>
-            </div>
-          </div>
+              <span className={cn("text-sm font-light tracking-wide", isYearly ? "text-black dark:text-white" : "text-black/40 dark:text-white/40")}>Yearly</span>
+              <span className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40 border border-black/10 dark:border-white/10 px-3 py-1">
+                Save 20%
+              </span>
+            </motion.div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 dark:bg-white/10 max-w-6xl mx-auto mb-32">
             {tiers.map((tier, i) => (
               <motion.div
                 key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ duration: 0.8, ease: editorialEase, delay: i * 0.1 }}
                 className={cn(
-                  "relative p-8 rounded-[32px] border flex flex-col h-full bg-card transition-all duration-300",
+                  "relative p-10 md:p-12 flex flex-col h-full transition-all duration-700 group",
                   tier.highlight 
-                    ? "border-primary shadow-[0_0_40px_-10px_rgba(var(--primary),0.3)] scale-105 z-10" 
-                    : "border-border hover:border-primary/30"
+                    ? "bg-black text-white dark:bg-white dark:text-black" 
+                    : "bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                 )}
               >
                 {tier.highlight && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">Most Popular</Badge>
+                  <div className="absolute top-0 left-0 right-0">
+                    <p className="text-xs uppercase tracking-[0.3em] text-center py-3 bg-white/10 dark:bg-black/10">
+                      Most Popular
+                    </p>
                   </div>
                 )}
                 
-                <div className="mb-8">
-                    <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{tier.description}</p>
-                  </div>
-                  
-                  <div className="mb-8 flex items-baseline gap-1">
-                    <span className="text-5xl font-black tracking-tight text-white">$</span>
-                    <span className="text-6xl font-black tracking-tight text-white">
-                      {isYearly ? tier.price.yearly : tier.price.monthly}
-                    </span>
-                    <span className="text-zinc-400 font-medium">/mo</span>
-                  </div>
-                  
-                  <div className="space-y-4 mb-10 flex-grow">
-                    {tier.features.map((feature) => (
-                      <div key={feature} className="flex gap-3">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-zinc-200">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className={cn("mb-10", tier.highlight && "mt-8")}>
+                  <p className={cn(
+                    "text-xs uppercase tracking-[0.3em] mb-4 transition-colors duration-700",
+                    tier.highlight ? "text-white/40 dark:text-black/40" : "text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40"
+                  )}>
+                    {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <h3 className="text-3xl md:text-4xl font-serif font-light mb-3">{tier.name}</h3>
+                  <p className={cn(
+                    "text-sm font-light leading-relaxed transition-colors duration-700",
+                    tier.highlight ? "text-white/60 dark:text-black/60" : "text-black/60 dark:text-white/60 group-hover:text-white/60 dark:group-hover:text-black/60"
+                  )}>
+                    {tier.description}
+                  </p>
+                </div>
                 
+                <div className="mb-10">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl md:text-6xl font-serif font-light">
+                      ${isYearly ? tier.price.yearly : tier.price.monthly}
+                    </span>
+                    <span className={cn(
+                      "text-sm font-light transition-colors duration-700",
+                      tier.highlight ? "text-white/40 dark:text-black/40" : "text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40"
+                    )}>
+                      /mo
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="space-y-4 mb-12 flex-grow">
+                  {tier.features.map((feature) => (
+                    <div key={feature} className="flex items-start gap-3">
+                      <Check className={cn(
+                        "w-4 h-4 mt-0.5 transition-colors duration-700",
+                        tier.highlight ? "text-white/60 dark:text-black/60" : "text-black/40 dark:text-white/40 group-hover:text-white/60 dark:group-hover:text-black/60"
+                      )} />
+                      <span className="text-sm font-light">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              
                 <Link href={tier.href}>
                   <Button 
                     className={cn(
-                      "w-full rounded-2xl py-6 text-lg font-bold",
-                      tier.highlight ? "glow-primary" : "bg-muted hover:bg-muted/80 text-foreground"
+                      "w-full rounded-full h-14 text-sm uppercase tracking-[0.2em] font-medium transition-all duration-500",
+                      tier.highlight 
+                        ? "bg-white text-black hover:bg-white/90 dark:bg-black dark:text-white dark:hover:bg-black/90" 
+                        : "bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 group-hover:bg-white group-hover:text-black dark:group-hover:bg-black dark:group-hover:text-white"
                     )}
-                    variant={tier.highlight ? "default" : "secondary"}
                   >
                     {tier.cta}
+                    <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
               </motion.div>
             ))}
           </div>
           
-          <div className="mt-24 max-w-5xl mx-auto glass p-12 rounded-[40px] border-border/50">
-            <div className="flex flex-col md:flex-row gap-12 items-center">
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-3xl font-heading font-black mb-4">Enterprise Solutions</h2>
-                <p className="text-muted-foreground text-lg mb-6">Need custom deployment, advanced security, or dedicated support? Our enterprise plan is tailored for large-scale operations.</p>
-                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Shield className="w-5 h-5 text-primary" />
-                    Custom Security
-                  </div>
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Globe className="w-5 h-5 text-primary" />
-                    Global CDN
-                  </div>
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Users className="w-5 h-5 text-primary" />
-                    Dedicated Account Manager
-                  </div>
-                </div>
-              </div>
-              <div className="flex-shrink-0">
-                <Link href="/contact">
-                  <Button size="lg" className="rounded-2xl px-10 h-16 text-lg font-bold glow-primary">Contact Sales</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Check, HelpCircle, Zap, Shield, Globe, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
-
-const tiers = [
-  {
-    name: "Weekly",
-    price: { monthly: 6, yearly: 6, isWeekly: true },
-    description: "Perfect for short-term projects and testing.",
-    features: [
-      "7 days full access",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "All Pro features included",
-      "No commitment",
-    ],
-    cta: "Get Started",
-    href: "/checkout?plan=weekly",
-    highlight: false,
-  },
-  {
-    name: "Pro",
-    price: { monthly: 20, yearly: 16 },
-    description: "Ideal for professionals and small global teams.",
-    features: [
-      "Unlimited translation minutes",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "Voice cloning (1 profile)",
-      "Zoom & Teams integration",
-      "Advanced meeting insights",
-    ],
-    cta: "Start Free Trial",
-    href: "/checkout?plan=pro",
-    highlight: true,
-  },
-  {
-    name: "Business",
-    price: { monthly: 50, yearly: 40 },
-    description: "Advanced features for growing organizations.",
-    features: [
-      "Everything in Pro",
-      "Unlimited voice cloning",
-      "Physical room hardware support",
-      "Custom vocabulary & glossaries",
-      "Team workspace & admin tools",
-      "24/7 Priority support",
-    ],
-    cta: "Contact Sales",
-    href: "/checkout?plan=business",
-    highlight: false,
-  },
-]
-
-export default function PricingPage() {
-  const [isYearly, setIsYearly] = useState(false)
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-6xl font-heading font-black mb-6">Simple, Transparent <br /><span className="text-primary">Pricing.</span></h1>
-            <p className="text-xl text-muted-foreground mb-10">Choose the plan that's right for your global communication needs. No hidden fees.</p>
-            
-                <div className="flex items-center justify-center gap-4">
-                <span className={cn("text-sm font-medium", !isYearly ? "text-white" : "text-zinc-400")}>Monthly</span>
-                <Switch 
-                  checked={isYearly}
-                  onCheckedChange={setIsYearly}
-                />
-                <span className={cn("text-sm font-medium", isYearly ? "text-white" : "text-zinc-400")}>Yearly</span>
-                <Badge className="bg-green-500/10 text-green-500 hover:bg-green-500/10 border-green-500/20">
-                  Save 20% on Annual
-                </Badge>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {tiers.map((tier, i) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={cn(
-                  "relative p-8 rounded-[32px] border flex flex-col h-full bg-card transition-all duration-300",
-                  tier.highlight 
-                    ? "border-primary shadow-[0_0_40px_-10px_rgba(var(--primary),0.3)] scale-105 z-10" 
-                    : "border-border hover:border-primary/30"
-                )}
-              >
-                {tier.highlight && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">Most Popular</Badge>
-                  </div>
-                )}
-                
-                <div className="mb-8">
-                    <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{tier.description}</p>
-                  </div>
-                  
-                  <div className="mb-8 flex items-baseline gap-1">
-                    <span className="text-5xl font-black tracking-tight text-white">$</span>
-                    <span className="text-6xl font-black tracking-tight text-white">
-                      {isYearly ? tier.price.yearly : tier.price.monthly}
-                    </span>
-                    <span className="text-zinc-400 font-medium">/mo</span>
-                  </div>
-                  
-                  <div className="space-y-4 mb-10 flex-grow">
-                    {tier.features.map((feature) => (
-                      <div key={feature} className="flex gap-3">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-zinc-200">{feature}</span>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="max-w-5xl mx-auto"
+          >
+            <div className="border border-black/10 dark:border-white/10 p-12 md:p-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">Enterprise</p>
+                  <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+                    Custom <em className="italic">solutions</em>
+                  </h2>
+                  <p className="text-black/60 dark:text-white/60 font-light leading-relaxed mb-8">
+                    Need custom deployment, advanced security, or dedicated support? Our enterprise plan is tailored for large-scale operations.
+                  </p>
+                  <div className="flex flex-wrap gap-8">
+                    {[
+                      { icon: Shield, label: "Custom Security" },
+                      { icon: Globe, label: "Global CDN" },
+                      { icon: Users, label: "Dedicated Manager" },
+                    ].map((item) => (
+                      <div key={item.label} className="flex items-center gap-2">
+                        <item.icon className="w-4 h-4 text-black/40 dark:text-white/40" />
+                        <span className="text-sm font-light">{item.label}</span>
                       </div>
                     ))}
                   </div>
-                
-                <Link href={tier.href}>
-                  <Button 
-                    className={cn(
-                      "w-full rounded-2xl py-6 text-lg font-bold",
-                      tier.highlight ? "glow-primary" : "bg-muted hover:bg-muted/80 text-foreground"
-                    )}
-                    variant={tier.highlight ? "default" : "secondary"}
-                  >
-                    {tier.cta}
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          
-          <div className="mt-24 max-w-5xl mx-auto glass p-12 rounded-[40px] border-border/50">
-            <div className="flex flex-col md:flex-row gap-12 items-center">
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-3xl font-heading font-black mb-4">Enterprise Solutions</h2>
-                <p className="text-muted-foreground text-lg mb-6">Need custom deployment, advanced security, or dedicated support? Our enterprise plan is tailored for large-scale operations.</p>
-                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Shield className="w-5 h-5 text-primary" />
-                    Custom Security
-                  </div>
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Globe className="w-5 h-5 text-primary" />
-                    Global CDN
-                  </div>
-                  <div className="flex items-center gap-2 text-sm font-bold">
-                    <Users className="w-5 h-5 text-primary" />
-                    Dedicated Account Manager
-                  </div>
+                </div>
+                <div className="flex justify-center lg:justify-end">
+                  <Link href="/contact">
+                    <Button 
+                      size="lg" 
+                      className="rounded-full h-16 px-12 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 transition-all duration-500"
+                    >
+                      Contact Sales
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
-              <div className="flex-shrink-0">
-                <Link href="/contact">
-                  <Button size="lg" className="rounded-2xl px-10 h-16 text-lg font-bold glow-primary">Contact Sales</Button>
-                </Link>
-              </div>
             </div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Check, HelpCircle, Zap, Shield, Globe, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
-
-const tiers = [
-  {
-    name: "Weekly",
-    price: { monthly: 6, yearly: 6, isWeekly: true },
-    description: "Perfect for short-term projects and testing.",
-    features: [
-      "7 days full access",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "All Pro features included",
-      "No commitment",
-    ],
-    cta: "Get Started",
-    href: "/checkout?plan=weekly",
-    highlight: false,
-  },
-  {
-    name: "Pro",
-    price: { monthly: 20, yearly: 16 },
-    description: "Ideal for professionals and small global teams.",
-    features: [
-      "Unlimited translation minutes",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "Voice cloning (1 profile)",
-      "Zoom & Teams integration",
-      "Advanced meeting insights",
-    ],
-    cta: "Start Free Trial",
-    href: "/checkout?plan=pro",
-    highlight: true,
-  },
-  {
-    name: "Business",
-    price: { monthly: 50, yearly: 40 },
-    description: "Advanced features for growing organizations.",
-    features: [
-      "Everything in Pro",
-      "Unlimited voice cloning",
-      "Physical room hardware support",
-      "Custom vocabulary & glossaries",
-      "Team workspace & admin tools",
-      "24/7 Priority support",
-    ],
-    cta: "Contact Sales",
-    href: "/checkout?plan=business",
-    highlight: false,
-  },
-]
-
-export default function PricingPage() {
-  const [isYearly, setIsYearly] = useState(false)
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-6xl font-heading font-black mb-6">Simple, Transparent <br /><span className="text-primary">Pricing.</span></h1>
-            <p className="text-xl text-muted-foreground mb-10">Choose the plan that's right for your global communication needs. No hidden fees.</p>
-            
-                <div className="flex items-center justify-center gap-4">
-                <span className={cn("text-sm font-medium", !isYearly ? "text-white" : "text-zinc-400")}>Monthly</span>
-                <Switch 
-                  checked={isYearly}
-                  onCheckedChange={setIsYearly}
-                />
-                <span className={cn("text-sm font-medium", isYearly ? "text-white" : "text-zinc-400")}>Yearly</span>
-                <Badge className="bg-green-500/10 text-green-500 hover:bg-green-500/10 border-green-500/20">
-                  Save 20% on Annual
-                </Badge>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {tiers.map((tier, i) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={cn(
-                  "relative p-8 rounded-[32px] border flex flex-col h-full bg-card transition-all duration-300",
-                  tier.highlight 
-                    ? "border-primary shadow-[0_0_40px_-10px_rgba(var(--primary),0.3)] scale-105 z-10" 
-                    : "border-border hover:border-primary/30"
-                )}
-              >
-                {tier.highlight && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">Most Popular</Badge>
-                  </div>
-                )}
-                
-                <div className="mb-8">
-                    <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{tier.description}</p>
-                  </div>
-                  
-                  <div className="mb-8 flex items-baseline gap-1">
-                    <span className="text-5xl font-black tracking-tight text-white">$</span>
-                    <span className="text-6xl font-black tracking-tight text-white">
-                      {isYearly ? tier.price.yearly : tier.price.monthly}
-                    </span>
-                    <span className="text-zinc-400 font-medium">/mo</span>
-                  </div>
-                  
-                  <div className="space-y-4 mb-10 flex-grow">
-                    {tier.features.map((feature) => (
-                      <div key={feature} className="flex gap-3">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-zinc-200">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                
-                <Link href={tier.href}>
-                  <Button 
-                    className={cn(
-                      "w-full rounded-2xl py-6 text-lg font-bold",
-                      tier.highlight ? "glow-primary" : "bg-muted hover:bg-muted/80 text-foreground"
-                    )}
-                    variant={tier.highlight ? "default" : "secondary"}
-                  >
-                    {tier.cta}
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          
-            <div className="mt-24 max-w-5xl mx-auto glass p-12 rounded-[40px] border-border/50">
-              <div className="flex flex-col md:flex-row gap-12 items-center">
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-3xl font-heading font-black mb-4 text-white">Enterprise Solutions</h2>
-                  <p className="text-zinc-300 text-lg mb-6">Need custom deployment, advanced security, or dedicated support? Our enterprise plan is tailored for large-scale operations.</p>
-                  <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Shield className="w-5 h-5 text-primary" />
-                      Custom Security
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Globe className="w-5 h-5 text-primary" />
-                      Global CDN
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Users className="w-5 h-5 text-primary" />
-                      Dedicated Account Manager
-                    </div>
-                  </div>
-                </div>
-              <div className="flex-shrink-0">
-                <Link href="/contact">
-                  <Button size="lg" className="rounded-2xl px-10 h-16 text-lg font-bold glow-primary">Contact Sales</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Check, HelpCircle, Zap, Shield, Globe, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
-
-const tiers = [
-  {
-    name: "Weekly",
-    price: { monthly: 6, yearly: 6, isWeekly: true },
-    description: "Perfect for short-term projects and testing.",
-    features: [
-      "7 days full access",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "All Pro features included",
-      "No commitment",
-    ],
-    cta: "Get Started",
-    href: "/checkout?plan=weekly",
-    highlight: false,
-  },
-  {
-    name: "Pro",
-    price: { monthly: 20, yearly: 16 },
-    description: "Ideal for professionals and small global teams.",
-    features: [
-      "Unlimited translation minutes",
-      "Priority AI voice engine",
-      "Support for 100+ languages",
-      "Voice cloning (1 profile)",
-      "Zoom & Teams integration",
-      "Advanced meeting insights",
-    ],
-    cta: "Start Free Trial",
-    href: "/checkout?plan=pro",
-    highlight: true,
-  },
-  {
-    name: "Business",
-    price: { monthly: 50, yearly: 40 },
-    description: "Advanced features for growing organizations.",
-    features: [
-      "Everything in Pro",
-      "Unlimited voice cloning",
-      "Physical room hardware support",
-      "Custom vocabulary & glossaries",
-      "Team workspace & admin tools",
-      "24/7 Priority support",
-    ],
-    cta: "Contact Sales",
-    href: "/checkout?plan=business",
-    highlight: false,
-  },
-]
-
-export default function PricingPage() {
-  const [isYearly, setIsYearly] = useState(false)
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h1 className="text-4xl md:text-6xl font-heading font-black mb-6 text-white">Simple, Transparent <br /><span className="text-primary">Pricing.</span></h1>
-              <p className="text-xl text-zinc-300 mb-10">Choose the plan that's right for your global communication needs. No hidden fees.</p>
-            
-                <div className="flex items-center justify-center gap-4">
-                <span className={cn("text-sm font-medium", !isYearly ? "text-white" : "text-zinc-400")}>Monthly</span>
-                <Switch 
-                  checked={isYearly}
-                  onCheckedChange={setIsYearly}
-                />
-                <span className={cn("text-sm font-medium", isYearly ? "text-white" : "text-zinc-400")}>Yearly</span>
-                <Badge className="bg-green-500/10 text-green-500 hover:bg-green-500/10 border-green-500/20">
-                  Save 20% on Annual
-                </Badge>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {tiers.map((tier, i) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={cn(
-                  "relative p-8 rounded-[32px] border flex flex-col h-full bg-card transition-all duration-300",
-                  tier.highlight 
-                    ? "border-primary shadow-[0_0_40px_-10px_rgba(var(--primary),0.3)] scale-105 z-10" 
-                    : "border-border hover:border-primary/30"
-                )}
-              >
-                {tier.highlight && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">Most Popular</Badge>
-                  </div>
-                )}
-                
-                <div className="mb-8">
-                    <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{tier.description}</p>
-                  </div>
-                  
-                  <div className="mb-8 flex items-baseline gap-1">
-                    <span className="text-5xl font-black tracking-tight text-white">$</span>
-                    <span className="text-6xl font-black tracking-tight text-white">
-                      {isYearly ? tier.price.yearly : tier.price.monthly}
-                    </span>
-                    <span className="text-zinc-400 font-medium">/mo</span>
-                  </div>
-                  
-                  <div className="space-y-4 mb-10 flex-grow">
-                    {tier.features.map((feature) => (
-                      <div key={feature} className="flex gap-3">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-zinc-200">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                
-                <Link href={tier.href}>
-                  <Button 
-                    className={cn(
-                      "w-full rounded-2xl py-6 text-lg font-bold",
-                      tier.highlight ? "glow-primary" : "bg-muted hover:bg-muted/80 text-foreground"
-                    )}
-                    variant={tier.highlight ? "default" : "secondary"}
-                  >
-                    {tier.cta}
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          
-            <div className="mt-24 max-w-5xl mx-auto glass p-12 rounded-[40px] border-border/50">
-              <div className="flex flex-col md:flex-row gap-12 items-center">
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-3xl font-heading font-black mb-4 text-white">Enterprise Solutions</h2>
-                  <p className="text-zinc-300 text-lg mb-6">Need custom deployment, advanced security, or dedicated support? Our enterprise plan is tailored for large-scale operations.</p>
-                  <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Shield className="w-5 h-5 text-primary" />
-                      Custom Security
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Globe className="w-5 h-5 text-primary" />
-                      Global CDN
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-bold text-white">
-                      <Users className="w-5 h-5 text-primary" />
-                      Dedicated Account Manager
-                    </div>
-                  </div>
-                </div>
-              <div className="flex-shrink-0">
-                <Link href="/contact">
-                  <Button size="lg" className="rounded-2xl px-10 h-16 text-lg font-bold glow-primary">Contact Sales</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </main>
 

@@ -2,709 +2,142 @@
 
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
 import { motion } from "framer-motion"
-import { Terminal, Monitor, Globe, Apple, Laptop, ArrowRight, CloudDownload, Zap, Shield } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Apple, Monitor, Terminal, Globe, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-function LocalBadge({ children, className, variant }: { children: React.ReactNode; className?: string; variant?: any }) {
-  return (
-    <Badge variant={variant} className={className}>
-      {children}
-    </Badge>
-  )
-}
+const editorialEase = [0.22, 1, 0.36, 1]
+
+const platforms = [
+  { 
+    name: "macOS", 
+    icon: Apple, 
+    version: "v2.5.2", 
+    size: "88MB", 
+    type: "Universal (M1/M2/Intel)",
+    desc: "Optimized for Apple Silicon with native neural engine support."
+  },
+  { 
+    name: "Windows", 
+    icon: Monitor, 
+    version: "v2.5.2", 
+    size: "96MB", 
+    type: "Windows 10/11 (64-bit)",
+    desc: "High-performance client with ASIO audio driver support."
+  },
+  { 
+    name: "Linux", 
+    icon: Terminal, 
+    version: "v2.5.2", 
+    size: "72MB", 
+    type: "AppImage / Deb / RPM",
+    desc: "Native Linux client with full support for Wayland and X11."
+  },
+]
 
 export default function DownloadPage() {
-  const platforms = [
-    { 
-      name: "macOS", 
-      icon: Apple, 
-      version: "v2.5.2", 
-      size: "88MB", 
-      type: "Universal (M1/M2/Intel)",
-      desc: "Optimized for Apple Silicon with native neural engine support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Windows", 
-      icon: Monitor, 
-      version: "v2.5.2", 
-      size: "96MB", 
-      type: "Windows 10/11 (64-bit)",
-      desc: "High-performance client with ASIO audio driver support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700 group-hover:rotate-45">
-          <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M20 50 H80 M50 20 V80" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Linux", 
-      icon: Terminal, 
-      version: "v2.5.2", 
-      size: "72MB", 
-      type: "AppImage / Deb / RPM",
-      desc: "Native Linux client with full support for Wayland and X11.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <path d="M20 30 L80 30 L80 70 L20 70 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M30 45 L40 50 L30 55" fill="none" stroke="currentColor" strokeWidth="1" />
-          <line x1="45" y1="55" x2="55" y2="55" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      )
-    },
-  ]
-
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+      <div className="grain" />
       <Navbar />
       
-      <main className="flex-grow pt-32 pb-24 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-24 relative"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 blur-[120px] -z-10" />
-              <LocalBadge variant="outline" className="mb-6 py-2 px-6 bg-background/50 backdrop-blur-sm border-primary/20 text-primary uppercase tracking-[0.3em] font-black text-[10px]">
-                Deploy Anywhere
-              </LocalBadge>
-              <h1 className="text-6xl md:text-8xl font-heading font-black mb-8 tracking-tighter leading-[0.85]">
-                Seamless Access <br /><span className="text-primary italic">On Every Device.</span>
-              </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Experience the full power of the VertoX neural engine with our native high-performance clients. Optimized for minimal latency and maximum privacy.
+      <main className="flex-grow pt-32 pb-24 px-6 md:px-12">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="text-center mb-20"
+          >
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-6">Download</p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-[0.85] mb-8">
+              Access <em className="italic">anywhere</em>
+            </h1>
+            <p className="text-lg text-black/60 dark:text-white/60 font-light max-w-2xl mx-auto">
+              Native high-performance clients optimized for minimal latency and maximum privacy.
             </p>
           </motion.div>
 
-          {/* Platforms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 dark:bg-white/10 mb-24">
             {platforms.map((p, i) => (
               <motion.div
                 key={p.name}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative glass p-10 rounded-[56px] border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden bg-black/40 backdrop-blur-3xl h-full flex flex-col"
+                transition={{ duration: 0.8, ease: editorialEase, delay: i * 0.1 }}
+                className="bg-white dark:bg-black p-10 md:p-12 group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-700 flex flex-col h-full"
               >
-                {p.visual}
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-2xl shadow-black">
-                  <p.icon className="w-8 h-8 text-primary" />
+                <div className="flex items-center justify-between mb-8">
+                  <p.icon className="w-8 h-8" />
+                  <span className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700">
+                    {p.version}
+                  </span>
                 </div>
-                <h3 className="text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-500">{p.name}</h3>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed flex-grow">
+                
+                <h3 className="text-3xl md:text-4xl font-serif font-light mb-4">{p.name}</h3>
+                <p className="text-sm text-black/60 dark:text-white/60 group-hover:text-white/60 dark:group-hover:text-black/60 font-light leading-relaxed mb-6 transition-colors duration-700 flex-grow">
                   {p.desc}
                 </p>
-                <div className="space-y-2 mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Version</span>
-                    <span className="text-white">{p.version}</span>
+
+                <div className="space-y-3 mb-8 py-6 border-t border-b border-black/10 dark:border-white/10 group-hover:border-white/10 dark:group-hover:border-black/10 transition-colors duration-700">
+                  <div className="flex justify-between text-xs">
+                    <span className="uppercase tracking-[0.2em] text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700">Size</span>
+                    <span>{p.size}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Size</span>
-                    <span className="text-white">{p.size}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Target</span>
-                    <span className="text-white">{p.type}</span>
+                  <div className="flex justify-between text-xs">
+                    <span className="uppercase tracking-[0.2em] text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700">Target</span>
+                    <span>{p.type}</span>
                   </div>
                 </div>
-                <Button className="w-full rounded-3xl py-8 text-lg font-black group-hover:glow-primary transition-all flex gap-3">
-                  <CloudDownload className="w-6 h-6" />
+
+                <Button className="w-full rounded-full h-14 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 group-hover:bg-white group-hover:text-black dark:group-hover:bg-black dark:group-hover:text-white transition-all duration-500">
                   Download
+                  <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </motion.div>
             ))}
           </div>
 
-          {/* Secondary Options */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-black/10 dark:bg-white/10">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-primary/20 bg-primary/5 relative overflow-hidden group hover:bg-primary/10 transition-all duration-500"
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: editorialEase }}
+              className="bg-black dark:bg-white text-white dark:text-black p-12 md:p-16"
             >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Globe className="w-64 h-64 text-primary" />
-              </div>
-                <div className="relative z-10">
-                  <LocalBadge className="mb-6 bg-primary/20 text-primary border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">Web Extension</LocalBadge>
-                  <h2 className="text-4xl font-black mb-6">VertoX for Browser</h2>
-                <p className="text-muted-foreground mb-10 text-lg leading-relaxed">Inject real-time captions and neural translation directly into any web-based meeting platform. Compatible with Chrome, Edge, and Brave.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="default" className="rounded-2xl px-10 h-16 text-lg font-black glow-primary flex items-center gap-3">
-                    Add to Chrome <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Shield className="w-64 h-64 text-white" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-white/10 text-white border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">CLI Engine</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX Core CLI</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">For developers and power users. A high-performance command line interface for headless translation and batch processing.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="outline" className="rounded-2xl px-10 h-16 text-lg font-black border-white/10 hover:bg-white/5 flex items-center gap-3">
-                    <Zap className="w-5 h-5" />
-                    npm install vertox
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
-import { motion } from "framer-motion"
-import { Terminal, Monitor, Globe, Apple, Laptop, ArrowRight, CloudDownload, Zap, Shield } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-
-function LocalBadge({ children, className, variant }: { children: React.ReactNode; className?: string; variant?: any }) {
-  return (
-    <Badge variant={variant} className={className}>
-      {children}
-    </Badge>
-  )
-}
-
-export default function DownloadPage() {
-  const platforms = [
-    { 
-      name: "macOS", 
-      icon: Apple, 
-      version: "v2.5.2", 
-      size: "88MB", 
-      type: "Universal (M1/M2/Intel)",
-      desc: "Optimized for Apple Silicon with native neural engine support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Windows", 
-      icon: Monitor, 
-      version: "v2.5.2", 
-      size: "96MB", 
-      type: "Windows 10/11 (64-bit)",
-      desc: "High-performance client with ASIO audio driver support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700 group-hover:rotate-45">
-          <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M20 50 H80 M50 20 V80" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Linux", 
-      icon: Terminal, 
-      version: "v2.5.2", 
-      size: "72MB", 
-      type: "AppImage / Deb / RPM",
-      desc: "Native Linux client with full support for Wayland and X11.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <path d="M20 30 L80 30 L80 70 L20 70 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M30 45 L40 50 L30 55" fill="none" stroke="currentColor" strokeWidth="1" />
-          <line x1="45" y1="55" x2="55" y2="55" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      )
-    },
-  ]
-
-  return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-24 relative"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 blur-[120px] -z-10" />
-              <LocalBadge variant="outline" className="mb-6 py-2 px-6 bg-background/50 backdrop-blur-sm border-primary/20 text-primary uppercase tracking-[0.3em] font-black text-[10px]">
-                Deploy Anywhere
-              </LocalBadge>
-                <h1 className="text-6xl md:text-8xl font-heading font-black mb-8 tracking-tighter leading-[0.85] text-white">
-                  Seamless Access <br /><span className="text-primary italic">On Every Device.</span>
-                </h1>
-              <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-                Experience the full power of the VertoX neural engine with our native high-performance clients. Optimized for minimal latency and maximum privacy.
+              <Globe className="w-8 h-8 mb-8" />
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 dark:text-black/40 mb-4">Browser Extension</p>
+              <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+                VertoX for <em className="italic">Browser</em>
+              </h2>
+              <p className="text-white/60 dark:text-black/60 font-light leading-relaxed mb-8">
+                Real-time captions and neural translation directly in any web-based meeting platform.
               </p>
-          </motion.div>
-
-          {/* Platforms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-            {platforms.map((p, i) => (
-              <motion.div
-                key={p.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative glass p-10 rounded-[56px] border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden bg-black/40 backdrop-blur-3xl h-full flex flex-col"
-              >
-                {p.visual}
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-2xl shadow-black">
-                  <p.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-500">{p.name}</h3>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed flex-grow">
-                  {p.desc}
-                </p>
-                <div className="space-y-2 mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Version</span>
-                    <span className="text-white">{p.version}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Size</span>
-                    <span className="text-white">{p.size}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Target</span>
-                    <span className="text-white">{p.type}</span>
-                  </div>
-                </div>
-                <Button className="w-full rounded-3xl py-8 text-lg font-black group-hover:glow-primary transition-all flex gap-3">
-                  <CloudDownload className="w-6 h-6" />
-                  Download
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Secondary Options */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-primary/20 bg-primary/5 relative overflow-hidden group hover:bg-primary/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Globe className="w-64 h-64 text-primary" />
-              </div>
-                <div className="relative z-10">
-                  <LocalBadge className="mb-6 bg-primary/20 text-primary border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">Web Extension</LocalBadge>
-                  <h2 className="text-4xl font-black mb-6">VertoX for Browser</h2>
-                <p className="text-muted-foreground mb-10 text-lg leading-relaxed">Inject real-time captions and neural translation directly into any web-based meeting platform. Compatible with Chrome, Edge, and Brave.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="default" className="rounded-2xl px-10 h-16 text-lg font-black glow-primary flex items-center gap-3">
-                    Add to Chrome <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
+              <Button className="rounded-full h-14 px-10 text-sm uppercase tracking-[0.2em] font-medium bg-white text-black hover:bg-white/90 dark:bg-black dark:text-white dark:hover:bg-black/90 transition-all duration-500">
+                Add to Chrome
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-all duration-500"
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: editorialEase, delay: 0.2 }}
+              className="bg-white dark:bg-black p-12 md:p-16"
             >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Shield className="w-64 h-64 text-white" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-white/10 text-white border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">CLI Engine</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX Core CLI</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">For developers and power users. A high-performance command line interface for headless translation and batch processing.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="outline" className="rounded-2xl px-10 h-16 text-lg font-black border-white/10 hover:bg-white/5 flex items-center gap-3">
-                    <Zap className="w-5 h-5" />
-                    npm install vertox
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
-import { motion } from "framer-motion"
-import { Terminal, Monitor, Globe, Apple, Laptop, ArrowRight, CloudDownload, Zap, Shield } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-
-function LocalBadge({ children, className, variant }: { children: React.ReactNode; className?: string; variant?: any }) {
-  return (
-    <Badge variant={variant} className={className}>
-      {children}
-    </Badge>
-  )
-}
-
-export default function DownloadPage() {
-  const platforms = [
-    { 
-      name: "macOS", 
-      icon: Apple, 
-      version: "v2.5.2", 
-      size: "88MB", 
-      type: "Universal (M1/M2/Intel)",
-      desc: "Optimized for Apple Silicon with native neural engine support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Windows", 
-      icon: Monitor, 
-      version: "v2.5.2", 
-      size: "96MB", 
-      type: "Windows 10/11 (64-bit)",
-      desc: "High-performance client with ASIO audio driver support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700 group-hover:rotate-45">
-          <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M20 50 H80 M50 20 V80" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Linux", 
-      icon: Terminal, 
-      version: "v2.5.2", 
-      size: "72MB", 
-      type: "AppImage / Deb / RPM",
-      desc: "Native Linux client with full support for Wayland and X11.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <path d="M20 30 L80 30 L80 70 L20 70 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M30 45 L40 50 L30 55" fill="none" stroke="currentColor" strokeWidth="1" />
-          <line x1="45" y1="55" x2="55" y2="55" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      )
-    },
-  ]
-
-  return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-24 relative"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 blur-[120px] -z-10" />
-              <LocalBadge variant="outline" className="mb-6 py-2 px-6 bg-background/50 backdrop-blur-sm border-primary/20 text-primary uppercase tracking-[0.3em] font-black text-[10px]">
-                Deploy Anywhere
-              </LocalBadge>
-                <h1 className="text-6xl md:text-8xl font-heading font-black mb-8 tracking-tighter leading-[0.85] text-white">
-                  Seamless Access <br /><span className="text-primary italic">On Every Device.</span>
-                </h1>
-              <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-                Experience the full power of the VertoX neural engine with our native high-performance clients. Optimized for minimal latency and maximum privacy.
+              <Terminal className="w-8 h-8 mb-8" />
+              <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">CLI Engine</p>
+              <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+                VertoX <em className="italic">Core</em>
+              </h2>
+              <p className="text-black/60 dark:text-white/60 font-light leading-relaxed mb-8">
+                High-performance command line interface for headless translation and batch processing.
               </p>
-          </motion.div>
-
-          {/* Platforms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-            {platforms.map((p, i) => (
-              <motion.div
-                key={p.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative glass p-10 rounded-[56px] border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden bg-black/40 backdrop-blur-3xl h-full flex flex-col"
-              >
-                {p.visual}
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-2xl shadow-black">
-                  <p.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-500">{p.name}</h3>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed flex-grow">
-                  {p.desc}
-                </p>
-                <div className="space-y-2 mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Version</span>
-                    <span className="text-white">{p.version}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Size</span>
-                    <span className="text-white">{p.size}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Target</span>
-                    <span className="text-white">{p.type}</span>
-                  </div>
-                </div>
-                <Button className="w-full rounded-3xl py-8 text-lg font-black group-hover:glow-primary transition-all flex gap-3">
-                  <CloudDownload className="w-6 h-6" />
-                  Download
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Secondary Options */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-primary/20 bg-primary/5 relative overflow-hidden group hover:bg-primary/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Globe className="w-64 h-64 text-primary" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-primary/20 text-primary border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">Web Extension</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX for Browser</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">Inject real-time captions and neural translation directly into any web-based meeting platform. Compatible with Chrome, Edge, and Brave.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="default" className="rounded-2xl px-10 h-16 text-lg font-black glow-primary flex items-center gap-3">
-                    Add to Chrome <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Shield className="w-64 h-64 text-white" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-white/10 text-white border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">CLI Engine</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX Core CLI</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">For developers and power users. A high-performance command line interface for headless translation and batch processing.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="outline" className="rounded-2xl px-10 h-16 text-lg font-black border-white/10 hover:bg-white/5 flex items-center gap-3">
-                    <Zap className="w-5 h-5" />
-                    npm install vertox
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-"use client"
-
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
-import { motion } from "framer-motion"
-import { Terminal, Monitor, Globe, Apple, Laptop, ArrowRight, CloudDownload, Zap, Shield } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-
-function LocalBadge({ children, className, variant }: { children: React.ReactNode; className?: string; variant?: any }) {
-  return (
-    <Badge variant={variant} className={className}>
-      {children}
-    </Badge>
-  )
-}
-
-export default function DownloadPage() {
-  const platforms = [
-    { 
-      name: "macOS", 
-      icon: Apple, 
-      version: "v2.5.2", 
-      size: "88MB", 
-      type: "Universal (M1/M2/Intel)",
-      desc: "Optimized for Apple Silicon with native neural engine support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Windows", 
-      icon: Monitor, 
-      version: "v2.5.2", 
-      size: "96MB", 
-      type: "Windows 10/11 (64-bit)",
-      desc: "High-performance client with ASIO audio driver support.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700 group-hover:rotate-45">
-          <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M20 50 H80 M50 20 V80" stroke="currentColor" strokeWidth="0.2" />
-        </svg>
-      )
-    },
-    { 
-      name: "Linux", 
-      icon: Terminal, 
-      version: "v2.5.2", 
-      size: "72MB", 
-      type: "AppImage / Deb / RPM",
-      desc: "Native Linux client with full support for Wayland and X11.",
-      visual: (
-        <svg viewBox="0 0 100 100" className="absolute -right-5 -bottom-5 w-32 h-32 opacity-10 pointer-events-none group-hover:opacity-20 transition-all duration-700">
-          <path d="M20 30 L80 30 L80 70 L20 70 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <path d="M30 45 L40 50 L30 55" fill="none" stroke="currentColor" strokeWidth="1" />
-          <line x1="45" y1="55" x2="55" y2="55" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      )
-    },
-  ]
-
-  return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-24 relative"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 blur-[120px] -z-10" />
-              <LocalBadge variant="outline" className="mb-6 py-2 px-6 bg-background/50 backdrop-blur-sm border-primary/20 text-primary uppercase tracking-[0.3em] font-black text-[10px]">
-                Deploy Anywhere
-              </LocalBadge>
-                <h1 className="text-6xl md:text-8xl font-heading font-black mb-8 tracking-tighter leading-[0.85] text-white">
-                  Seamless Access <br /><span className="text-primary italic">On Every Device.</span>
-                </h1>
-              <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-                Experience the full power of the VertoX neural engine with our native high-performance clients. Optimized for minimal latency and maximum privacy.
-              </p>
-          </motion.div>
-
-          {/* Platforms Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-            {platforms.map((p, i) => (
-              <motion.div
-                key={p.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative glass p-10 rounded-[56px] border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden bg-black/40 backdrop-blur-3xl h-full flex flex-col"
-              >
-                {p.visual}
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-2xl shadow-black">
-                  <p.icon className="w-8 h-8 text-primary" />
-                </div>
-                  <h3 className="text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-500 text-white">{p.name}</h3>
-                  <p className="text-zinc-300 text-sm mb-6 leading-relaxed flex-grow">
-                    {p.desc}
-                  </p>
-                <div className="space-y-2 mb-8 p-4 rounded-2xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Version</span>
-                    <span className="text-white">{p.version}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Size</span>
-                    <span className="text-white">{p.size}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Target</span>
-                    <span className="text-white">{p.type}</span>
-                  </div>
-                </div>
-                <Button className="w-full rounded-3xl py-8 text-lg font-black group-hover:glow-primary transition-all flex gap-3">
-                  <CloudDownload className="w-6 h-6" />
-                  Download
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Secondary Options */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-primary/20 bg-primary/5 relative overflow-hidden group hover:bg-primary/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Globe className="w-64 h-64 text-primary" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-primary/20 text-primary border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">Web Extension</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX for Browser</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">Inject real-time captions and neural translation directly into any web-based meeting platform. Compatible with Chrome, Edge, and Brave.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="default" className="rounded-2xl px-10 h-16 text-lg font-black glow-primary flex items-center gap-3">
-                    Add to Chrome <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-12 rounded-[64px] border-white/10 bg-white/5 relative overflow-hidden group hover:bg-white/10 transition-all duration-500"
-            >
-              <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Shield className="w-64 h-64 text-white" />
-              </div>
-                <div className="relative z-10">
-                    <LocalBadge className="mb-6 bg-white/10 text-white border-none py-1.5 px-4 rounded-full text-[10px] font-black uppercase tracking-widest">CLI Engine</LocalBadge>
-                    <h2 className="text-4xl font-black mb-6 text-white">VertoX Core CLI</h2>
-                  <p className="text-zinc-300 mb-10 text-lg leading-relaxed">For developers and power users. A high-performance command line interface for headless translation and batch processing.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button variant="outline" className="rounded-2xl px-10 h-16 text-lg font-black border-white/10 hover:bg-white/5 flex items-center gap-3">
-                    <Zap className="w-5 h-5" />
-                    npm install vertox
-                  </Button>
-                </div>
-              </div>
+              <Button variant="outline" className="rounded-full h-14 px-10 text-sm uppercase tracking-[0.2em] font-medium border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-500 font-mono">
+                npm install vertox
+              </Button>
             </motion.div>
           </div>
         </div>

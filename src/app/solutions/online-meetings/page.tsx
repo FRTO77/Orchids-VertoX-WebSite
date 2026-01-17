@@ -1,149 +1,164 @@
 "use client"
 
-import { Video, Globe, Zap, Users, Shield, MessageSquare, ArrowRight, CheckCircle2, Sparkles, Mic2 } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { Video, CheckCircle2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
 import { motion } from "framer-motion"
-import Link from "next/link"
+
+const editorialEase = [0.22, 1, 0.36, 1]
 
 const platforms = [
-  { name: "Zoom", logo: "ZM", color: "bg-blue-600" },
-  { name: "Google Meet", logo: "GM", color: "bg-green-600" },
-  { name: "Teams", logo: "MS", color: "bg-indigo-600" },
-  { name: "Webex", logo: "WX", color: "bg-cyan-600" },
-  { name: "Slack", logo: "SL", color: "bg-purple-600" },
-  { name: "Discord", logo: "DS", color: "bg-slate-700" },
+  { name: "Zoom", abbr: "ZM" },
+  { name: "Google Meet", abbr: "GM" },
+  { name: "Teams", abbr: "MS" },
+  { name: "Webex", abbr: "WX" },
+  { name: "Slack", abbr: "SL" },
+  { name: "Discord", abbr: "DS" },
+]
+
+const features = [
+  "Sub-500ms latency",
+  "Vocal fingerprinting",
+  "E2E Encryption",
+  "Speaker diarization",
+  "Auto-captioning",
+  "Multi-lang support"
 ]
 
 export default function OnlineMeetingsPage() {
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+      <div className="grain" />
       <Navbar />
       
-      <main className="flex-grow pt-32 pb-24 px-4">
-        <div className="container mx-auto max-w-7xl">
+      <main className="flex-grow pt-32 pb-24 px-6 md:px-12">
+        <div className="container mx-auto max-w-6xl">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl mx-auto text-center mb-24"
+            transition={{ duration: 1, ease: editorialEase }}
+            className="text-center mb-20"
           >
-            <Badge variant="outline" className="mb-6 py-1.5 px-4 bg-primary/10 border-primary/20 text-primary uppercase tracking-widest font-bold">
-              Online Solutions
-            </Badge>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black mb-8 leading-[0.9]">
-              Virtual Meetings, <br />Universal <span className="text-primary italic">Voices.</span>
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-6">Online Meetings</p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-[0.85] mb-8">
+              Virtual meetings, <em className="italic">universal</em> voices
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-12 max-w-3xl mx-auto">
+            <p className="text-lg text-black/60 dark:text-white/60 font-light max-w-2xl mx-auto mb-12">
               VertoX integrates directly with your favorite video conferencing tools, providing real-time voice translation that sounds exactly like you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="rounded-2xl h-16 px-10 text-xl font-bold glow-primary">
-                Try for Free
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-2xl h-16 px-10 text-xl font-bold border-white/20">
-                How it Works
-              </Button>
+              <Link href="/signup">
+                <Button className="rounded-full h-14 px-10 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 transition-all duration-500">
+                  Try for Free
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-32">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-px bg-black/10 dark:bg-white/10 mb-24">
             {platforms.map((p, i) => (
               <motion.div 
                 key={p.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                className="glass p-8 rounded-[32px] border-border/50 flex flex-col items-center justify-center gap-4 group hover:border-primary/50 transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: editorialEase, delay: i * 0.05 }}
+                className="bg-white dark:bg-black p-6 md:p-8 flex flex-col items-center justify-center gap-3 group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-700"
               >
-                <div className={`w-14 h-14 rounded-2xl ${p.color} flex items-center justify-center font-black text-xl shadow-lg transition-transform group-hover:scale-110`}>
-                  {p.logo}
-                </div>
-                <span className="text-sm font-bold tracking-widest uppercase opacity-60">{p.name}</span>
+                <span className="text-2xl font-serif font-light">{p.abbr}</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700">{p.name}</span>
               </motion.div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-black/10 dark:bg-white/10 mb-24">
             <motion.div 
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="space-y-8"
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: editorialEase }}
+              className="bg-white dark:bg-black p-12 md:p-16"
             >
-              <h2 className="text-4xl md:text-5xl font-heading font-black leading-tight">Native-feel <br />integrations.</h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">Integration</p>
+              <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+                Native-feel <em className="italic">integrations</em>
+              </h2>
+              <p className="text-black/60 dark:text-white/60 font-light leading-relaxed mb-10">
                 No more clunky browser extensions. VertoX acts as a virtual audio driver, meaning it works natively with any software that uses a microphone.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {[
-                  "Sub-500ms latency",
-                  "Vocal fingerprinting",
-                  "E2E Encryption",
-                  "Speaker diarization",
-                  "Auto-captioning",
-                  "Multi-lang support"
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="font-bold">{item}</span>
-                  </div>
+              <div className="grid grid-cols-2 gap-4">
+                {features.map((item, i) => (
+                  <motion.div 
+                    key={item}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, ease: editorialEase, delay: i * 0.05 }}
+                    className="flex items-center gap-3"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-black/40 dark:text-white/40" />
+                    <span className="text-sm font-light">{item}</span>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
             
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="relative"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: editorialEase, delay: 0.2 }}
+              className="bg-black dark:bg-white text-white dark:text-black p-12 md:p-16"
             >
-              <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
-              <div className="relative glass aspect-[4/3] rounded-[48px] border-primary/20 flex flex-col overflow-hidden">
-                <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                    <span className="text-xs font-black tracking-widest uppercase">Live Session</span>
+              <div className="border border-white/10 dark:border-black/10 p-6 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/40 dark:text-black/40">Live Session</span>
                   </div>
-                  <Badge className="bg-primary text-primary-foreground font-bold">English → Mandarin</Badge>
+                  <span className="text-xs uppercase tracking-[0.2em]">EN → ZH</span>
                 </div>
-                <div className="flex-grow p-8 flex flex-col justify-center gap-8">
-                  <div className="space-y-2">
-                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Incoming Audio</div>
-                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-sm italic">
-                      "We need to finalize the quarterly budget by Friday morning."
-                    </div>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/40 dark:text-black/40 mb-2">Input</p>
+                    <p className="text-sm font-light italic">"We need to finalize the quarterly budget by Friday morning."</p>
                   </div>
-                  <div className="flex justify-center">
-                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 text-primary" />
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-right">
-                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Translated Output</div>
-                    <div className="p-4 rounded-2xl bg-primary/10 border border-primary/20 text-sm italic text-primary">
-                      "我们需要在周五早上之前最终确定季度预算。"
-                    </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/40 dark:text-black/40 mb-2">Output</p>
+                    <p className="text-sm font-light italic">"我们需要在周五早上之前最终确定季度预算。"</p>
                   </div>
                 </div>
+              </div>
+              <div className="flex justify-between text-xs uppercase tracking-[0.2em] text-white/40 dark:text-black/40">
+                <span>Latency: ~0.4s</span>
+                <span>Confidence: 98%</span>
               </div>
             </motion.div>
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="glass p-12 md:p-20 rounded-[60px] border-primary/20 bg-primary/5 text-center"
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="bg-black dark:bg-white text-white dark:text-black p-12 md:p-20 text-center"
           >
-            <Mic2 className="w-16 h-16 text-primary mx-auto mb-8" />
-            <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">Host your first global meeting.</h2>
-            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Ready to see the difference VertoX can make? Start your 14-day free trial and connect with your global team today.
+            <Video className="w-12 h-12 mx-auto mb-8 text-white/40 dark:text-black/40" />
+            <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+              Host your first <em className="italic">global</em> meeting
+            </h2>
+            <p className="text-white/60 dark:text-black/60 font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+              Start your 14-day free trial and connect with your global team today.
             </p>
-            <Button size="lg" className="rounded-2xl px-12 h-16 text-xl font-bold glow-primary">Download for Desktop</Button>
+            <Link href="/download">
+              <Button className="rounded-full h-16 px-12 text-sm uppercase tracking-[0.2em] font-medium bg-white text-black hover:bg-white/90 dark:bg-black dark:text-white dark:hover:bg-black/90 transition-all duration-500">
+                Download for Desktop
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </main>

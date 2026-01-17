@@ -1,18 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { Github, ArrowRight } from "lucide-react"
+import { ArrowRight, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { LovableBackground } from "@/components/LovableBackground"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Loader2 } from "lucide-react"
+import { motion } from "framer-motion"
+
+const editorialEase = [0.22, 1, 0.36, 1]
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -72,135 +72,167 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      <LovableBackground />
+    <div className="min-h-screen flex bg-white dark:bg-black">
+      <div className="grain" />
       
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <span className="text-3xl font-heading font-black tracking-tighter">
-              Verto<span className="text-primary">X</span>
-            </span>
+      <div className="hidden lg:flex lg:w-1/2 bg-black dark:bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white dark:bg-grid-black" />
+        <div className="relative z-10 flex flex-col justify-between p-16 text-white dark:text-black">
+          <Link href="/" className="text-2xl font-serif tracking-tight">
+            Verto<em className="italic">X</em>
           </Link>
-          <h1 className="text-3xl font-heading font-black">Create Account</h1>
-          <p className="text-muted-foreground mt-2 font-bold tracking-tight text-xl">Be yourself in any language</p>
-        </div>
-
-        <Card className="rounded-[32px] border-border/50 bg-card/50 backdrop-blur-xl">
-          <CardContent className="p-8 space-y-6">
-            {error && (
-              <Alert variant="destructive" className="rounded-xl">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            <form onSubmit={handleAuth} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="full-name">Full Name</Label>
-                <Input 
-                  id="full-name" 
-                  placeholder="John Doe" 
-                  className="h-12 rounded-xl bg-muted/30" 
-                  required 
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="name@example.com" 
-                  className="h-12 rounded-xl bg-muted/30" 
-                  required 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  placeholder="••••••••" 
-                  className="h-12 rounded-xl bg-muted/30" 
-                  required 
-                  minLength={8} 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm Password</Label>
-                <Input 
-                  id="confirm-password" 
-                  type="password" 
-                  placeholder="••••••••" 
-                  className="h-12 rounded-xl bg-muted/30" 
-                  required 
-                  minLength={8} 
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-
-                <div className="flex items-start space-x-2 pt-2">
-                  <Checkbox id="terms" className="mt-1" required />
-                  <div className="text-xs text-muted-foreground leading-normal">
-                    I agree to the <Link href="/terms" className="text-primary font-bold hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-primary font-bold hover:underline">Privacy Policy</Link>.
-                  </div>
-                </div>
-
-
-              <Button 
-                type="submit" 
-                className="w-full h-12 rounded-xl font-bold glow-primary text-lg mt-4"
-                disabled={loading}
-              >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
-              </Button>
-            </form>
-            
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
-              <div className="relative flex justify-center text-xs uppercase"><span className="bg-card px-2 text-muted-foreground font-bold">Or sign up with</span></div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4">
-              <Button 
-                variant="outline" 
-                className="h-12 rounded-xl font-bold border-border/50 hover:bg-muted/50" 
-                onClick={handleGoogleLogin}
-                disabled={loading}
-              >
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                  <path
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    fill="#34A853"
-                  />
-                  <path
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    fill="#FBBC05"
-                  />
-                  <path
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    fill="#EA4335"
-                  />
-                </svg>
-                Google
-              </Button>
-            </div>
-          </CardContent>
-          <CardFooter className="bg-muted/30 py-4 px-8 flex justify-center rounded-b-[32px]">
-            <p className="text-sm text-muted-foreground font-medium">
-              Already have an account? <Link href="/signin" className="text-primary font-bold hover:underline">Sign In</Link>
+          <div>
+            <h1 className="text-5xl md:text-6xl font-serif font-light leading-[0.9] mb-6">
+              Be <em className="italic">yourself</em>
+              <br />in any language
+            </h1>
+            <p className="text-white/60 dark:text-black/60 font-light leading-relaxed max-w-md">
+              Create an account to start translating conversations while preserving your voice and identity.
             </p>
-          </CardFooter>
-        </Card>
+          </div>
+          <p className="text-xs uppercase tracking-[0.3em] text-white/40 dark:text-black/40">
+            © {new Date().getFullYear()} VertoX AI Inc.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center p-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: editorialEase }}
+          className="w-full max-w-md"
+        >
+          <div className="lg:hidden mb-12">
+            <Link href="/" className="text-2xl font-serif tracking-tight">
+              Verto<em className="italic">X</em>
+            </Link>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-4xl font-serif font-light mb-2">Create account</h2>
+            <p className="text-black/40 dark:text-white/40 font-light">
+              Start your free trial today
+            </p>
+          </div>
+
+          {error && (
+            <Alert variant="destructive" className="mb-6 border-red-500/20 bg-red-500/5">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          <form onSubmit={handleAuth} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="full-name" className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+                Full Name
+              </Label>
+              <Input 
+                id="full-name" 
+                placeholder="John Doe" 
+                className="h-14 rounded-none border-0 border-b border-black/10 dark:border-white/10 bg-transparent px-0 text-lg font-light focus:border-black dark:focus:border-white transition-colors focus-visible:ring-0" 
+                required 
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+                Email Address
+              </Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="name@example.com" 
+                className="h-14 rounded-none border-0 border-b border-black/10 dark:border-white/10 bg-transparent px-0 text-lg font-light focus:border-black dark:focus:border-white transition-colors focus-visible:ring-0" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+                Password
+              </Label>
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••" 
+                className="h-14 rounded-none border-0 border-b border-black/10 dark:border-white/10 bg-transparent px-0 text-lg font-light focus:border-black dark:focus:border-white transition-colors focus-visible:ring-0" 
+                required 
+                minLength={8} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password" className="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+                Confirm Password
+              </Label>
+              <Input 
+                id="confirm-password" 
+                type="password" 
+                placeholder="••••••••" 
+                className="h-14 rounded-none border-0 border-b border-black/10 dark:border-white/10 bg-transparent px-0 text-lg font-light focus:border-black dark:focus:border-white transition-colors focus-visible:ring-0" 
+                required 
+                minLength={8} 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="flex items-start space-x-3 pt-2">
+              <Checkbox id="terms" className="mt-0.5" required />
+              <label htmlFor="terms" className="text-sm text-black/40 dark:text-white/40 leading-relaxed">
+                I agree to the{" "}
+                <Link href="/terms" className="text-black dark:text-white hover:underline">Terms of Service</Link>
+                {" "}and{" "}
+                <Link href="/privacy" className="text-black dark:text-white hover:underline">Privacy Policy</Link>
+              </label>
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full rounded-full h-14 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 transition-all duration-500"
+              disabled={loading}
+            >
+              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
+            </Button>
+          </form>
+          
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-black/10 dark:border-white/10" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white dark:bg-black px-4 text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+                Or sign up with
+              </span>
+            </div>
+          </div>
+
+          <Button 
+            variant="outline" 
+            className="w-full h-14 rounded-full font-light border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-500" 
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
+            <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+            </svg>
+            Google
+          </Button>
+
+          <p className="mt-8 text-center text-sm text-black/40 dark:text-white/40">
+            Already have an account?{" "}
+            <Link href="/signin" className="text-black dark:text-white hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </motion.div>
       </div>
     </div>
   )

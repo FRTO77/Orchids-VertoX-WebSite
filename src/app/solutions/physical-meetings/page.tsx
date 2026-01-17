@@ -1,115 +1,131 @@
 "use client"
 
+import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { LovableBackground } from "@/components/LovableBackground"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
-import { Mic2, Globe, Sparkles, Building2, MapPin, Tablet, Speaker, Radio, Bluetooth } from "lucide-react"
+import { Building2, MapPin, Tablet, Mic2, Speaker, Radio, Bluetooth, ArrowRight } from "lucide-react"
+
+const editorialEase = [0.22, 1, 0.36, 1]
+
+const useCases = [
+  { icon: Building2, title: "Hotel Front Desks", desc: "Seamless check-ins for international guests in any language." },
+  { icon: MapPin, title: "Travel & Tourism", desc: "Guided tours with real-time audio translation for groups." },
+  { icon: Tablet, title: "Conference Centers", desc: "Dedicated translation tablets for multi-lingual sessions." },
+  { icon: Mic2, title: "Medical Clinics", desc: "Accurate translation for critical patient-doctor communication." },
+]
+
+const hardware = [
+  { icon: Speaker, title: "Beamforming Mics", desc: "Isolate voices from background noise with advanced spatial filtering." },
+  { icon: Radio, title: "Long-Range Hub", desc: "Connect up to 50 simultaneous devices in a single conference room." },
+  { icon: Bluetooth, title: "VertoX Connect", desc: "Instant pairing with mobile devices for seamless translation." }
+]
 
 export default function PhysicalMeetingsPage() {
-  const useCases = [
-    { icon: Building2, title: "Hotel Front Desks", color: "text-primary", desc: "Seamless check-ins for international guests in any language." },
-    { icon: MapPin, title: "Travel & Tourism", color: "text-purple-500", desc: "Guided tours with real-time audio translation for groups." },
-    { icon: Tablet, title: "Conference Centers", color: "text-orange-500", desc: "Dedicated translation tablets for multi-lingual sessions." },
-    { icon: Mic2, title: "Medical Clinics", color: "text-green-500", desc: "Accurate translation for critical patient-doctor communication." },
-  ]
-
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <LovableBackground />
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+      <div className="grain" />
       <Navbar />
       
-      <main className="flex-grow pt-32 pb-24 px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="flex flex-col lg:flex-row gap-20 items-center mb-32">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex-1 space-y-8"
-            >
-              <Badge variant="outline" className="py-1.5 px-4 bg-primary/10 border-primary/20 text-primary uppercase tracking-widest font-bold">
-                In-Person Solutions
-              </Badge>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black leading-[0.9]">
-                Bring VertoX to <br /><span className="text-primary italic">Reality.</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                Experience crystal-clear translation in conference rooms, hotels, and hospitals with our specialized hardware and mobile app solutions.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="rounded-2xl h-16 px-12 text-xl font-bold glow-primary">Talk to Sales</Button>
-                <Button size="lg" variant="outline" className="rounded-2xl h-16 px-12 text-xl font-bold border-white/20">View Hardware</Button>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full"
-            >
-              {useCases.map((uc, i) => (
-                <div key={uc.title} className="glass p-8 rounded-[40px] border-border/50 hover:border-primary/30 transition-all group">
-                  <div className={`w-14 h-14 rounded-2xl bg-muted flex items-center justify-center mb-6 ${uc.color} group-hover:scale-110 transition-transform`}>
-                    <uc.icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3">{uc.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{uc.desc}</p>
-                </div>
-              ))}
-            </motion.div>
+      <main className="flex-grow pt-32 pb-24 px-6 md:px-12">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="text-center mb-20"
+          >
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-6">Physical Meetings</p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-[0.85] mb-8">
+              Bring VertoX to <em className="italic">reality</em>
+            </h1>
+            <p className="text-lg text-black/60 dark:text-white/60 font-light max-w-2xl mx-auto mb-12">
+              Crystal-clear translation in conference rooms, hotels, and hospitals with our specialized hardware and mobile app solutions.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact">
+                <Button className="rounded-full h-14 px-10 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 transition-all duration-500">
+                  Talk to Sales
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/10 dark:bg-white/10 mb-24">
+            {useCases.map((uc, i) => (
+              <motion.div 
+                key={uc.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: editorialEase, delay: i * 0.1 }}
+                className="bg-white dark:bg-black p-10 md:p-12 group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-700"
+              >
+                <uc.icon className="w-8 h-8 mb-6 text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700" />
+                <h3 className="text-2xl md:text-3xl font-serif font-light mb-4">{uc.title}</h3>
+                <p className="text-sm text-black/60 dark:text-white/60 group-hover:text-white/60 dark:group-hover:text-black/60 font-light leading-relaxed transition-colors duration-700">
+                  {uc.desc}
+                </p>
+              </motion.div>
+            ))}
           </div>
 
-          <div className="mb-32">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+          <div className="mb-24">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: editorialEase }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl font-black mb-6">Hardware Optimized for Voice.</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">VertoX Hubs and specialized microphones ensure the highest possible accuracy in noisy environments.</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">Hardware</p>
+              <h2 className="text-4xl md:text-5xl font-serif font-light">
+                Optimized for <em className="italic">voice</em>
+              </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { icon: Speaker, title: "Beamforming Mics", desc: "Isolate voices from background noise with advanced spatial filtering." },
-                { icon: Radio, title: "Long-Range Hub", desc: "Connect up to 50 simultaneous devices in a single conference room." },
-                { icon: Bluetooth, title: "VertoX Connect", desc: "Instant pairing with mobile devices for seamless on-the-go translation." }
-              ].map((h, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10 dark:bg-white/10">
+              {hardware.map((h, i) => (
                 <motion.div
                   key={h.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass p-10 rounded-[40px] border-border/50 text-center"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: editorialEase, delay: i * 0.1 }}
+                  className="bg-white dark:bg-black p-10 md:p-12 text-center group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-700"
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <h.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">{h.title}</h3>
-                  <p className="text-muted-foreground">{h.desc}</p>
+                  <h.icon className="w-8 h-8 mx-auto mb-6 text-black/40 dark:text-white/40 group-hover:text-white/40 dark:group-hover:text-black/40 transition-colors duration-700" />
+                  <h3 className="text-2xl font-serif font-light mb-4">{h.title}</h3>
+                  <p className="text-sm text-black/60 dark:text-white/60 group-hover:text-white/60 dark:group-hover:text-black/60 font-light leading-relaxed transition-colors duration-700">
+                    {h.desc}
+                  </p>
                 </motion.div>
               ))}
             </div>
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="glass p-12 md:p-20 rounded-[60px] border-primary/20 bg-primary/5 text-center relative overflow-hidden"
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: editorialEase }}
+            className="bg-black dark:bg-white text-white dark:text-black p-12 md:p-20 text-center"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-50" />
-            <div className="relative">
-              <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Ready to upgrade your space?</h2>
-              <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-                Schedule a site visit or request a demo unit for your organization.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="rounded-2xl px-12 h-16 text-xl font-bold glow-primary">Request Demo Unit</Button>
-                <Button size="lg" variant="outline" className="rounded-2xl px-12 h-16 text-xl font-bold border-white/20">Download Spec Sheet</Button>
-              </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-light leading-[0.9] mb-6">
+              Ready to upgrade your <em className="italic">space</em>?
+            </h2>
+            <p className="text-white/60 dark:text-black/60 font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+              Schedule a site visit or request a demo unit for your organization.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact">
+                <Button className="rounded-full h-16 px-12 text-sm uppercase tracking-[0.2em] font-medium bg-white text-black hover:bg-white/90 dark:bg-black dark:text-white dark:hover:bg-black/90 transition-all duration-500">
+                  Request Demo Unit
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
