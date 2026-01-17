@@ -22,6 +22,9 @@ import {
   Settings,
   User as UserIcon,
   LogOut,
+  Sun,
+  Moon,
+  Monitor,
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
@@ -41,6 +44,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
+import { useTheme } from "next-themes"
 
 const navLinks = [
   { 
@@ -75,6 +79,71 @@ const navLinks = [
   { name: "Customers", href: "/customers" },
   { name: "Dashboard", href: "/dashboard" },
 ]
+
+function ThemeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5">
+        <Sun className="w-4 h-4" />
+      </Button>
+    )
+  }
+
+  const cycleTheme = () => {
+    if (theme === "light") setTheme("dark")
+    else if (theme === "dark") setTheme("system")
+    else setTheme("light")
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 border border-black/10 dark:border-white/10"
+        >
+          {resolvedTheme === "dark" ? (
+            <Moon className="w-4 h-4" />
+          ) : (
+            <Sun className="w-4 h-4" />
+          )}
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-36 bg-white dark:bg-black border-black/10 dark:border-white/10">
+        <DropdownMenuItem 
+          onClick={() => setTheme("light")}
+          className={cn("flex items-center gap-2 cursor-pointer", theme === "light" && "bg-black/5 dark:bg-white/5")}
+        >
+          <Sun className="w-4 h-4" />
+          <span>Light</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setTheme("dark")}
+          className={cn("flex items-center gap-2 cursor-pointer", theme === "dark" && "bg-black/5 dark:bg-white/5")}
+        >
+          <Moon className="w-4 h-4" />
+          <span>Dark</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setTheme("system")}
+          className={cn("flex items-center gap-2 cursor-pointer", theme === "system" && "bg-black/5 dark:bg-white/5")}
+        >
+          <Monitor className="w-4 h-4" />
+          <span>System</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -202,7 +271,9 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -272,7 +343,8 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"

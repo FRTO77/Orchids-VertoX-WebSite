@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { 
   Globe, 
   Moon, 
@@ -13,7 +13,9 @@ import {
   Clock, 
   Lock, 
   Fingerprint,
-  Smartphone
+  Smartphone,
+  Monitor,
+  Check
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,9 +32,22 @@ import {
   SelectValue 
 } from "@/components/ui/select"
 import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
+
+const themeOptions = [
+  { value: "light", label: "Light", icon: Sun, description: "Clean, bright interface" },
+  { value: "dark", label: "Dark", icon: Moon, description: "Easy on the eyes" },
+  { value: "system", label: "System", icon: Monitor, description: "Match device settings" },
+]
 
 export default function SettingsPage() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <div className="max-w-4xl mx-auto space-y-10">
@@ -102,35 +117,98 @@ export default function SettingsPage() {
         <Card className="rounded-[32px] border-border/50 bg-card/50">
           <CardHeader>
             <CardTitle className="text-xl font-heading font-bold flex items-center gap-3">
-              <Sun className="w-5 h-5 text-primary" />
+              {mounted && resolvedTheme === "dark" ? (
+                <Moon className="w-5 h-5 text-primary" />
+              ) : (
+                <Sun className="w-5 h-5 text-primary" />
+              )}
               Appearance
             </CardTitle>
             <CardDescription>Customize how VertoX looks on your screen.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Theme</Label>
+                <p className="text-xs text-muted-foreground">Select your preferred color scheme for the interface.</p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {themeOptions.map((option) => {
+                  const Icon = option.icon
+                  const isSelected = mounted && theme === option.value
+                  
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => setTheme(option.value)}
+                      className={cn(
+                        "relative flex flex-col items-center gap-3 p-4 rounded-2xl border-2 transition-all duration-300",
+                        "hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                        isSelected 
+                          ? "border-primary bg-primary/5" 
+                          : "border-border/50 bg-muted/20"
+                      )}
+                    >
+                      {isSelected && (
+                        <div className="absolute top-2 right-2">
+                          <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                            <Check className="w-3 h-3 text-primary-foreground" />
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300",
+                        isSelected 
+                          ? "bg-primary text-primary-foreground" 
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      
+                      <div className="text-center">
+                        <p className={cn(
+                          "font-semibold text-sm",
+                          isSelected ? "text-primary" : "text-foreground"
+                        )}>
+                          {option.label}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
+                          {option.description}
+                        </p>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {mounted && theme === "system" && (
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/30 border border-border/50">
+                  <Monitor className="w-4 h-4 text-muted-foreground" />
+                  <p className="text-xs text-muted-foreground">
+                    Currently using <span className="font-medium text-foreground">{resolvedTheme}</span> mode based on your system preferences
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <Separator />
+
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <p className="font-bold">Theme Mode</p>
-                <p className="text-xs text-muted-foreground">Switch between light, dark, or system themes.</p>
+                <p className="font-bold">Reduce Motion</p>
+                <p className="text-xs text-muted-foreground">Minimize animations throughout the interface.</p>
               </div>
-              <div className="flex p-1 bg-muted/50 rounded-xl border border-border/50">
-                <Button 
-                  variant={theme === "light" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className="rounded-lg h-8 px-3"
-                  onClick={() => setTheme("light")}
-                >
-                  <Sun className="w-3.5 h-3.5 mr-2" /> Light
-                </Button>
-                <Button 
-                  variant={theme === "dark" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className="rounded-lg h-8 px-3"
-                  onClick={() => setTheme("dark")}
-                >
-                  <Moon className="w-3.5 h-3.5 mr-2" /> Dark
-                </Button>
+              <Switch />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <p className="font-bold">High Contrast</p>
+                <p className="text-xs text-muted-foreground">Increase contrast for better visibility.</p>
               </div>
+              <Switch />
             </div>
           </CardContent>
         </Card>
