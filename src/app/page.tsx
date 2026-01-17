@@ -412,6 +412,45 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Quote Section */}
+        <section className="min-h-screen relative overflow-hidden flex items-center">
+          <div className="absolute inset-0">
+            <Image
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+              alt="Earth from space"
+              fill
+              className="object-cover grayscale"
+            />
+            <div className="absolute inset-0 bg-black/60" />
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: editorialEase }}
+            className="relative z-10 container mx-auto px-6 md:px-12"
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              <svg 
+                className="w-12 h-12 mx-auto mb-8 text-white/40" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              >
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+              
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light italic text-white leading-relaxed mb-8">
+                "The limits of my language mean the limits of my world."
+              </h2>
+              
+              <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+                — Ludwig Wittgenstein
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
         {/* Solutions Showcase */}
         <div id="solutions" className="scroll-mt-20">
           <SolutionsShowcase />
