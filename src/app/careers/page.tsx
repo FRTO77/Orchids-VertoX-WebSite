@@ -28,8 +28,8 @@ export default function CareersPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-7xl font-heading font-black mb-6">Join the <span className="text-primary">Revolution.</span></h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-heading font-black mb-6 text-white">Join the <span className="text-primary">Revolution.</span></h1>
+            <p className="text-xl text-zinc-300 max-w-2xl mx-auto">
               Help us build the neural tissue of global communication. We're looking for passionate individuals to join our mission.
             </p>
           </motion.div>
@@ -45,38 +45,38 @@ export default function CareersPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="glass p-8 rounded-[40px] border-border/50"
+                className="glass p-8 rounded-[40px] border-border/50 hover:border-primary/30 transition-all duration-300"
               >
-                <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-                <p className="text-muted-foreground">{benefit.desc}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{benefit.title}</h3>
+                <p className="text-zinc-300">{benefit.desc}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl font-black mb-8">Open Positions</h2>
+            <h2 className="text-3xl font-black mb-8 text-white">Open Positions</h2>
             {jobs.map((job, i) => (
               <motion.div
                 key={job.title}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="glass p-6 md:p-8 rounded-[32px] border-border/50 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-primary/50 transition-all group"
+                className="glass p-6 md:p-8 rounded-[32px] border-border/50 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-primary/50 transition-all duration-300 group"
               >
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">{job.dept}</Badge>
-                    <span className="text-sm text-muted-foreground flex items-center gap-1">
+                    <span className="text-sm text-zinc-400 flex items-center gap-1">
                       <MapPin className="w-3 h-3" /> {job.location}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{job.title}</h3>
+                  <h3 className="text-2xl font-bold group-hover:text-primary transition-colors text-white">{job.title}</h3>
                 </div>
                 <div className="flex items-center gap-6">
-                  <span className="text-sm text-muted-foreground flex items-center gap-1">
+                  <span className="text-sm text-zinc-400 flex items-center gap-1">
                     <Clock className="w-3 h-3" /> {job.type}
                   </span>
-                  <Button className="rounded-xl px-6 group-hover:glow-primary transition-all">
+                  <Button className="rounded-xl px-6 group-hover:glow-primary transition-all duration-300">
                     Apply Now <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>

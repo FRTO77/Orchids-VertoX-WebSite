@@ -46,26 +46,26 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
             <div className="col-span-2">
               <Link href="/" className="flex items-center gap-2 mb-6">
-                <span className="text-xl font-heading font-bold tracking-tighter">
+                <span className="text-xl font-heading font-bold tracking-tighter text-white">
                   Verto<span className="text-primary">X</span>
                 </span>
               </Link>
-            <p className="text-muted-foreground max-w-sm mb-4">
-              VertoX translates speech in real time while preserving the speaker’s voice, tone and emotion. Low latency (~0.5s), 25+ languages, and enterprise-grade security.
+            <p className="text-zinc-400 max-w-sm mb-4">
+              VertoX translates speech in real time while preserving the speaker's voice, tone and emotion. Low latency (~0.5s), 25+ languages, and enterprise-grade security.
             </p>
-            <p className="text-xs text-muted-foreground">
-              Need help? Contact <a href="mailto:support@vertox.ai" className="hover:text-primary transition-colors font-bold">support@vertox.ai</a>
+            <p className="text-xs text-zinc-500">
+              Need help? Contact <a href="mailto:support@vertox.ai" className="hover:text-primary transition-colors font-bold text-zinc-400">support@vertox.ai</a>
             </p>
           </div>
           {footerLinks.map((section) =>
           <div key={section.title}>
-              <h4 className="font-heading font-bold mb-4">{section.title}</h4>
+              <h4 className="font-heading font-bold mb-4 text-white">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) =>
               <li key={link.name}>
                     <Link
                   href={link.href}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  className="text-sm text-zinc-400 hover:text-primary transition-colors">
 
                       {link.name}
                     </Link>
@@ -76,13 +76,13 @@ export function Footer() {
           )}
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border gap-4">
-          <p className="text-xs text-muted-foreground !w-[217px] !h-4">
+          <p className="text-xs text-zinc-500 !w-[217px] !h-4">
             © {new Date().getFullYear()} VertoX AI Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-6 !w-[118px] !h-5">
-            <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">Twitter</Link>
-            <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">LinkedIn</Link>
-            <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors !whitespace-pre-line"></Link>
+            <Link href="#" className="text-xs text-zinc-400 hover:text-primary transition-colors">Twitter</Link>
+            <Link href="#" className="text-xs text-zinc-400 hover:text-primary transition-colors">LinkedIn</Link>
+            <Link href="#" className="text-xs text-zinc-400 hover:text-primary transition-colors !whitespace-pre-line"></Link>
           </div>
         </div>
       </div>
