@@ -25,6 +25,7 @@ import {
   Sun,
   Moon,
   Monitor,
+  Terminal,
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
@@ -63,6 +64,7 @@ const navLinks = [
       { name: "Online Meetings", href: "/solutions/online-meetings", icon: Video, desc: "Zoom, Teams, Meet integration" },
       { name: "Physical Meetings", href: "/solutions/physical-meetings", icon: Users, desc: "Boardrooms and conferences" },
       { name: "API Integration", href: "/solutions/api", icon: Cpu, desc: "Build into your applications" },
+        { name: "API Playground", href: "/api-playground", icon: Terminal, desc: "Test our voice APIs live" },
     ]
   },
   { 
