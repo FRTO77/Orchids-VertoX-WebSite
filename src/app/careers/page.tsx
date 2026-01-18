@@ -16,10 +16,10 @@ const benefits = [
 ]
 
 const jobs = [
-  { title: "Senior AI Research Engineer", dept: "Engineering", location: "Remote / SF", type: "Full-time" },
-  { title: "Lead Product Designer", dept: "Design", location: "San Francisco", type: "Full-time" },
-  { title: "Linguistic Data Scientist", dept: "Data", location: "Remote", type: "Full-time" },
-  { title: "Enterprise Account Executive", dept: "Sales", location: "New York", type: "Full-time" },
+  { title: "Senior AI Research Engineer", dept: "Engineering", location: "Remote / SF", type: "Full-time", slug: "senior-ai-research-engineer" },
+  { title: "Lead Product Designer", dept: "Design", location: "San Francisco", type: "Full-time", slug: "lead-product-designer" },
+  { title: "Linguistic Data Scientist", dept: "Data", location: "Remote", type: "Full-time", slug: "linguistic-data-scientist" },
+  { title: "Enterprise Account Executive", dept: "Sales", location: "New York", type: "Full-time", slug: "enterprise-account-executive" },
 ]
 
 export default function CareersPage() {
@@ -82,7 +82,7 @@ export default function CareersPage() {
                 transition={{ duration: 0.6, ease: editorialEase, delay: i * 0.1 }}
               >
                 <Link 
-                  href="#"
+                  href={`/careers/${job.slug}`}
                   className="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-black/10 dark:border-white/10 group hover:pl-4 transition-all duration-500"
                 >
                   <div className="mb-4 md:mb-0">

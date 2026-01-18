@@ -198,12 +198,10 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-6 md:px-12">
-        <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center">
-            <span className="text-xl font-serif tracking-tight">
+          <div className="flex items-center justify-between h-20">
+            <Link href="/" className="text-xl font-serif tracking-tight">
               Verto<span className="italic">X</span>
-            </span>
-          </Link>
+            </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-10" ref={dropdownRef}>

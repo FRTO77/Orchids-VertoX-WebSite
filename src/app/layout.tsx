@@ -9,11 +9,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 export const metadata: Metadata = {
   title: "VertoX — Real-Time Voice Translator that Preserves Your Voice & Emotion",
   description: "VertoX lets teams and event audiences speak and understand each other instantly: real-time voice translation that preserves the speaker's voice, tone and emotion. Low latency, enterprise-grade privacy, and desktop + web clients.",
-  openGraph: {
-    title: "VertoX — Real-Time Voice & Emotion Translation",
-    description: "Join global meetings and events in your language. VertoX translates speech in real time, preserves the speaker's voice and emotion, and delivers it to listeners' devices with low latency.",
-  }
-};
+    openGraph: {
+      title: "VertoX — Real-Time Voice & Emotion Translation",
+      description: "Join global meetings and events in your language. VertoX translates speech in real time, preserves the speaker's voice and emotion, and delivers it to listeners' devices with low latency.",
+    },
+    icons: {
+      icon: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/64a974ad-3694-4ef7-9834-7c1e2992c152/19f7b718-06c1-408b-8ddc-9fab64742c4e-1768754368574.png?width=8000&height=8000&resize=contain",
+    },
+  };
 
 export default function RootLayout({
   children,

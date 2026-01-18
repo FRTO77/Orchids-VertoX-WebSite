@@ -67,10 +67,8 @@ export function Footer() {
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-block mb-6">
-              <span className="text-2xl font-serif tracking-tight">
-                Verto<em className="italic">X</em>
-              </span>
+            <Link href="/" className="text-2xl font-serif tracking-tight text-white mb-6 block">
+              Verto<em className="italic">X</em>
             </Link>
             <p className="text-sm text-white/40 font-light leading-relaxed max-w-xs">
               Real-time voice translation preserving speaker identity.
