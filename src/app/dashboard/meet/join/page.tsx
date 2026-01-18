@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { 
   Camera, 
@@ -26,7 +26,7 @@ import {
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-export default function JoinPage() {
+function JoinPageContent() {
   const searchParams = useSearchParams()
   const meetingId = searchParams.get("id") || ""
   const [isCameraOn, setIsCameraOn] = useState(true)
@@ -191,8 +191,16 @@ export default function JoinPage() {
             </div>
             <p className="text-xs font-bold text-muted-foreground">4 people are already in this room</p>
           </div>
+          </div>
         </div>
       </div>
-    </div>
+    )
+}
+
+export default function JoinPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-[50vh]"><div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" /></div>}>
+      <JoinPageContent />
+    </Suspense>
   )
 }
