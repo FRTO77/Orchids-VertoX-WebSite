@@ -236,35 +236,37 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-6 w-[280px] bg-white dark:bg-black border border-black/10 dark:border-white/10 overflow-hidden z-50"
-                    >
-                      <div className="py-2">
-                        {link.subLinks.map((sub, idx) => (
-                          <motion.div
-                            key={sub.name}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                          >
-                            <Link
-                              href={sub.href}
-                              className="group flex items-start gap-4 px-5 py-4 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300"
-                              onClick={() => setActiveMenu(null)}
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[320px] bg-white dark:bg-zinc-950 rounded-2xl shadow-2xl shadow-black/10 dark:shadow-black/50 border border-black/5 dark:border-white/10 overflow-hidden z-50"
+                      >
+                        <div className="p-2">
+                          {link.subLinks.map((sub, idx) => (
+                            <motion.div
+                              key={sub.name}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.05 }}
                             >
-                              <sub.icon className="w-4 h-4 mt-0.5 text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                              <div>
-                                <div className="text-sm font-medium group-hover:translate-x-1 transition-transform duration-300">
-                                  {sub.name}
+                              <Link
+                                href={sub.href}
+                                className="group flex items-start gap-4 px-4 py-3.5 rounded-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.06] transition-all duration-300"
+                                onClick={() => setActiveMenu(null)}
+                              >
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-black/5 to-black/10 dark:from-white/10 dark:to-white/5 flex items-center justify-center group-hover:from-black group-hover:to-black/80 dark:group-hover:from-white dark:group-hover:to-white/80 transition-all duration-300">
+                                  <sub.icon className="w-4 h-4 text-black/50 dark:text-white/50 group-hover:text-white dark:group-hover:text-black transition-colors duration-300" />
                                 </div>
-                                <p className="text-xs text-black/40 dark:text-white/40 mt-0.5">
-                                  {sub.desc}
-                                </p>
-                              </div>
-                            </Link>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </motion.div>
+                                <div className="flex-1 pt-0.5">
+                                  <div className="text-sm font-semibold text-black dark:text-white group-hover:translate-x-0.5 transition-transform duration-300">
+                                    {sub.name}
+                                  </div>
+                                  <p className="text-xs text-black/50 dark:text-white/50 mt-0.5 leading-relaxed">
+                                    {sub.desc}
+                                  </p>
+                                </div>
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
                   )}
                 </AnimatePresence>
               </div>

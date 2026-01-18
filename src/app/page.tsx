@@ -87,6 +87,57 @@ const faqs = [
 
 const editorialEase = [0.22, 1, 0.36, 1];
 
+function QuoteSectionWithParallax() {
+  const parallaxRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+
+  return (
+    <section ref={parallaxRef} className="min-h-screen relative overflow-hidden flex items-center">
+      <div className="absolute inset-0">
+        <motion.div style={{ y: imageY }} className="absolute inset-[-100px]">
+          <Image
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+            alt="Earth from space"
+            fill
+            className="object-cover grayscale"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+      
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: editorialEase }}
+        className="relative z-10 container mx-auto px-6 md:px-12"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <svg 
+            className="w-12 h-12 mx-auto mb-8 text-white/40" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+          >
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light italic text-white leading-relaxed mb-8">
+            "The limits of my language mean the limits of my world."
+          </h2>
+          
+          <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+            — Ludwig Wittgenstein
+          </p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
 export default function LandingPage() {
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -249,9 +300,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Process Section - White background */}
-        <section id="features" className="py-32 bg-white text-black relative overflow-hidden scroll-mt-20">
+        {/* Process Section - Voice Flow Visualization */}
+        <section id="features" className="py-32 md:py-40 bg-white text-black relative overflow-hidden scroll-mt-20">
           <div className="bg-grid-black absolute inset-0" />
+          
           <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="max-w-6xl mx-auto">
               <motion.div
@@ -259,7 +311,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: editorialEase }}
-                className="mb-20"
+                className="mb-20 text-center"
               >
                 <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-4">02 / Process</p>
                 <h2 className="text-5xl md:text-7xl font-serif font-light leading-[0.9]">
@@ -267,25 +319,210 @@ export default function LandingPage() {
                 </h2>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-black/10">
-                {processSteps.map((step, i) => (
+              <div className="relative">
+                <div className="relative border border-black/10 bg-white">
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch">
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: editorialEase }}
+                      className="p-8 md:p-12 flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-black/10"
+                    >
+                      <div className="w-20 h-20 rounded-full border-2 border-black flex items-center justify-center mb-6">
+                        <Mic2 className="w-8 h-8" />
+                      </div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-2">Input</p>
+                      <h3 className="text-2xl md:text-3xl font-serif font-light mb-3">Your Voice</h3>
+                      <p className="text-sm text-black/50 leading-relaxed">
+                        Speak naturally in your native language
+                      </p>
+                      
+                      <div className="mt-8 flex items-center gap-1">
+                        {[...Array(12)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="w-1 bg-black/80 rounded-full"
+                            animate={{
+                              height: [8, 24, 8],
+                            }}
+                            transition={{
+                              duration: 0.8,
+                              repeat: Infinity,
+                              delay: i * 0.08,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-black/30 mt-4">Audio Waveform</p>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, ease: editorialEase, delay: 0.2 }}
+                      className="hidden md:flex items-center justify-center px-4"
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <ArrowRight className="w-5 h-5 text-black/30" />
+                        <div className="w-px h-16 bg-black/10" />
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-black/30 [writing-mode:vertical-lr] rotate-180">Capture</span>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: editorialEase, delay: 0.3 }}
+                      className="p-8 md:p-12 flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-black/10 bg-black text-white"
+                    >
+                      <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center mb-6 relative">
+                        <Zap className="w-8 h-8" />
+                        <motion.div
+                          className="absolute inset-0 rounded-full border border-white/30"
+                          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      </div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Processing</p>
+                      <h3 className="text-2xl md:text-3xl font-serif font-light mb-3">Neural Engine</h3>
+                      <p className="text-sm text-white/50 leading-relaxed">
+                        AI translates while preserving voice identity
+                      </p>
+                      
+                      <div className="mt-8 grid grid-cols-3 gap-3 w-full max-w-[180px]">
+                        {["Voice", "Tone", "Emotion"].map((item, i) => (
+                          <motion.div
+                            key={item}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 + i * 0.1 }}
+                            className="text-center"
+                          >
+                            <motion.div
+                              className="w-full aspect-square border border-white/20 rounded-sm mb-2 flex items-center justify-center"
+                              animate={{ borderColor: ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.5)", "rgba(255,255,255,0.2)"] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                            >
+                              <motion.div
+                                className="w-2 h-2 bg-white rounded-full"
+                                animate={{ scale: [1, 1.5, 1] }}
+                                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                              />
+                            </motion.div>
+                            <span className="text-[9px] uppercase tracking-wider text-white/40">{item}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mt-4">~0.5s Latency</p>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, ease: editorialEase, delay: 0.5 }}
+                      className="hidden md:flex items-center justify-center px-4"
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <ArrowRight className="w-5 h-5 text-black/30" />
+                        <div className="w-px h-16 bg-black/10" />
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-black/30 [writing-mode:vertical-lr] rotate-180">Output</span>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: editorialEase, delay: 0.6 }}
+                      className="p-8 md:p-12 flex flex-col items-center text-center"
+                    >
+                      <div className="w-20 h-20 rounded-full border-2 border-black flex items-center justify-center mb-6">
+                        <Volume2 className="w-8 h-8" />
+                      </div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-2">Output</p>
+                      <h3 className="text-2xl md:text-3xl font-serif font-light mb-3">Their Language</h3>
+                      <p className="text-sm text-black/50 leading-relaxed">
+                        Listeners hear you in their native tongue
+                      </p>
+                      
+                      <div className="mt-8 flex flex-wrap justify-center gap-2 max-w-[200px]">
+                        {["EN", "ES", "FR", "DE", "ZH", "JA", "AR", "PT"].map((lang, i) => (
+                          <motion.div
+                            key={lang}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.8 + i * 0.05 }}
+                            className="w-8 h-8 border border-black/20 rounded-sm flex items-center justify-center text-[10px] font-medium text-black/60 hover:bg-black hover:text-white hover:border-black transition-all duration-300 cursor-default"
+                          >
+                            {lang}
+                          </motion.div>
+                        ))}
+                      </div>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-black/30 mt-4">25+ Languages</p>
+                    </motion.div>
+                  </div>
+
                   <motion.div
-                    key={step.num}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: editorialEase, delay: i * 0.1 }}
-                    className="bg-white p-8 md:p-10 group hover:bg-black hover:text-white transition-all duration-700"
-                  >
-                    <p className="text-xs uppercase tracking-[0.3em] text-black/40 group-hover:text-white/40 mb-6 transition-colors duration-700">
-                      {step.num}
-                    </p>
-                    <h3 className="text-3xl md:text-4xl font-serif font-light mb-4">{step.title}</h3>
-                    <p className="text-sm text-black/60 group-hover:text-white/60 leading-relaxed transition-colors duration-700">
-                      {step.desc}
-                    </p>
-                  </motion.div>
-                ))}
+                    transition={{ duration: 1.5, ease: editorialEase, delay: 0.8 }}
+                    className="h-1 bg-black origin-left"
+                  />
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: editorialEase, delay: 1 }}
+                  className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4"
+                >
+                  {[
+                    { label: "Voice Cloning", desc: "Your unique timbre preserved" },
+                    { label: "Real-Time", desc: "Sub-second processing" },
+                    { label: "Multi-Speaker", desc: "Handle simultaneous voices" },
+                    { label: "Secure", desc: "End-to-end encrypted" },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 1.1 + i * 0.1 }}
+                      className="text-center md:text-left"
+                    >
+                      <p className="text-sm font-medium mb-1">{item.label}</p>
+                      <p className="text-xs text-black/40">{item.desc}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: editorialEase, delay: 1.2 }}
+                  className="mt-16 flex justify-center"
+                >
+                  <Link href="/signup">
+                    <Button
+                      size="lg"
+                      className="rounded-full h-14 px-10 text-sm uppercase tracking-[0.2em] font-medium bg-black text-white hover:bg-black/80 transition-all duration-500 group"
+                    >
+                      Try it now
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -412,43 +649,78 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Quote Section */}
-        <section className="min-h-screen relative overflow-hidden flex items-center">
-          <div className="absolute inset-0">
-            <Image
-              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
-              alt="Earth from space"
-              fill
-              className="object-cover grayscale"
-            />
-            <div className="absolute inset-0 bg-black/60" />
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: editorialEase }}
-            className="relative z-10 container mx-auto px-6 md:px-12"
-          >
-            <div className="max-w-4xl mx-auto text-center">
-              <svg 
-                className="w-12 h-12 mx-auto mb-8 text-white/40" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
+        {/* Quote Section with Parallax */}
+        <QuoteSectionWithParallax />
+
+        {/* Languages Section */}
+        <section className="py-32 bg-white text-black relative overflow-hidden">
+          <div className="bg-grid-black absolute inset-0" />
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: editorialEase }}
+                className="text-center mb-20"
               >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light italic text-white leading-relaxed mb-8">
-                "The limits of my language mean the limits of my world."
-              </h2>
-              
-              <p className="text-xs uppercase tracking-[0.3em] text-white/60">
-                — Ludwig Wittgenstein
-              </p>
+                <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-4">Global Reach</p>
+                <h2 className="text-5xl md:text-7xl font-serif font-light leading-[0.9]">
+                  Speak in <em className="italic">25+ languages</em>
+                </h2>
+              </motion.div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {[
+                  { code: "EN", name: "English", native: "English" },
+                  { code: "ES", name: "Spanish", native: "Español" },
+                  { code: "FR", name: "French", native: "Français" },
+                  { code: "DE", name: "German", native: "Deutsch" },
+                  { code: "IT", name: "Italian", native: "Italiano" },
+                  { code: "PT", name: "Portuguese", native: "Português" },
+                  { code: "ZH", name: "Chinese", native: "中文" },
+                  { code: "JA", name: "Japanese", native: "日本語" },
+                  { code: "KO", name: "Korean", native: "한국어" },
+                  { code: "AR", name: "Arabic", native: "العربية" },
+                  { code: "HI", name: "Hindi", native: "हिन्दी" },
+                  { code: "RU", name: "Russian", native: "Русский" },
+                  { code: "NL", name: "Dutch", native: "Nederlands" },
+                  { code: "PL", name: "Polish", native: "Polski" },
+                  { code: "TR", name: "Turkish", native: "Türkçe" },
+                  { code: "VI", name: "Vietnamese", native: "Tiếng Việt" },
+                  { code: "TH", name: "Thai", native: "ไทย" },
+                  { code: "ID", name: "Indonesian", native: "Bahasa" },
+                  { code: "SV", name: "Swedish", native: "Svenska" },
+                  { code: "DA", name: "Danish", native: "Dansk" },
+                ].map((lang, i) => (
+                  <motion.div
+                    key={lang.code}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, ease: editorialEase, delay: i * 0.03 }}
+                    className="group border border-black/10 p-6 hover:bg-black hover:text-white hover:border-black transition-all duration-500 cursor-default"
+                  >
+                    <p className="text-2xl font-serif font-light mb-2">{lang.native}</p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs uppercase tracking-[0.2em] text-black/40 group-hover:text-white/40 transition-colors duration-500">{lang.name}</p>
+                      <p className="text-xs font-medium text-black/20 group-hover:text-white/20 transition-colors duration-500">{lang.code}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-center mt-12 text-sm text-black/40"
+              >
+                + more languages added monthly
+              </motion.p>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         {/* Solutions Showcase */}

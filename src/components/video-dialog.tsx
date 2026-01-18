@@ -6,21 +6,31 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Play } from "lucide-react";
+import { Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ReactNode } from "react";
+import { ReactNode, useState, useRef } from "react";
 
 interface VideoDialogProps {
-  videoUrl?: string;
+  videoSrc?: string;
   trigger?: ReactNode;
 }
 
 export function VideoDialog({ 
-  videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ", // Default to a placeholder, user should replace with actual demo
+  videoSrc = "/demo.mp4",
   trigger 
 }: VideoDialogProps) {
+  const [open, setOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen && videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {trigger || (
           <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-lg font-bold w-full sm:w-auto">
@@ -28,14 +38,15 @@ export function VideoDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-5xl p-0 overflow-hidden border-white/10 bg-black/90 backdrop-blur-xl sm:rounded-[32px]">
+      <DialogContent className="max-w-5xl p-0 overflow-hidden border-white/10 bg-black/95 backdrop-blur-xl sm:rounded-[32px]">
         <DialogTitle className="sr-only">VertoX Demo Video</DialogTitle>
-        <div className="aspect-video w-full">
-          <iframe
-            src={`${videoUrl}?autoplay=1`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full border-0"
+        <div className="aspect-video w-full bg-black">
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            controls
+            autoPlay
+            className="w-full h-full"
           />
         </div>
       </DialogContent>

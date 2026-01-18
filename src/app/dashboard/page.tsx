@@ -216,7 +216,7 @@ export default function DashboardPage() {
                   <span className="font-bold">John_V3_Stable</span>
                 </div>
               </div>
-              <Button className="w-full bg-white text-primary hover:bg-white/90 rounded-xl font-bold">Optimize Profile</Button>
+              <Button className="w-full bg-white text-black hover:bg-white/90 rounded-xl font-bold">Optimize Profile</Button>
             </CardContent>
           </Card>
 
