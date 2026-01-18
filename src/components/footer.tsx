@@ -104,18 +104,22 @@ export function Footer() {
             © {new Date().getFullYear()} VertoX AI Inc.
           </p>
           <div className="flex items-center gap-8">
-            <Link
-              href="#"
-              className="text-xs uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors duration-300"
-            >
-              Twitter
-            </Link>
-            <Link
-              href="#"
-              className="text-xs uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors duration-300"
-            >
-              LinkedIn
-            </Link>
+              <Link
+                href="https://x.com/omenssa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors duration-300"
+              >
+                Twitter
+              </Link>
+              <Link
+                href="https://www.linkedin.com/company/106549609"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors duration-300"
+              >
+                LinkedIn
+              </Link>
             <Link
               href="#"
               className="text-xs uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors duration-300"
